@@ -17,3 +17,9 @@ clean:
 		$(RM) $(OBJ) a.out
 debug: $(SRC)
 		$(CC) $(SRC) $(CFLAGS) $(CFDEBUG) -o $(OUT)/a.out
+
+debugRun: $(SRC)
+		$(CC) $(SRC) $(CFLAGS) $(CFDEBUG) -o $(OUT)/a.out && goToRoot && gdb build/a.out
+
+run: $(SRC)
+		$(CC) $(SRC) $(CFLAGS) -o $(OUT)/a.out && goToRoot && build/a.out

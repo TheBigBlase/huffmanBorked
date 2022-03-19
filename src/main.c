@@ -10,7 +10,7 @@ int main(){
 	//ChainedList BigTree = {0,0, &BigTreeRoot};
 
 	bubbleSort(&BigTree);
-	//printf("MAIN : printing chainlist\n");
+	printf("MAIN : printing chainlist\n");
 	printChainedList(&BigTree);
 
 	//printf("%p\n", &BigTree);
