@@ -2,8 +2,8 @@
 #include <malloc.h>
 #include "triAlphabet.h"
 
-int main(){
-	ChainedList BigTree = loadFile("test/text.txt");
+int main(int argc, char ** argv){
+	ChainedList BigTree = loadFile(argv[1]);
 	//ChainedList BigTreeLeaf = {1,a,NULL};
 	//ChainedList BigTreeRoot = {3,b,&BigTreeLeaf};
 	//ChainedList BigTree = {0,0, &BigTreeRoot};

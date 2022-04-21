@@ -33,8 +33,12 @@ BinaryTree * removeFromList(ChainedList * list);
 
 ChainedList loadFile(char* file);
 void bubbleSort(ChainedList *);
+void writeFreqToFile(ChainedList*, char*);
 
 BinaryTree* getHead(ChainedList*);
+
+///// OPS ON RES LIST /////
+void addToResList(ResList *,  bool);
 
 ///// PRINT /////
 void printBinaryTree(BinaryTree*);
