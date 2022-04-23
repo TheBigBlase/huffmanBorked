@@ -1,4 +1,4 @@
-SRC 	= src/main.c src/triAlphabet.c
+SRC 	= src/*.c
 OJB 	= $(SRC:.c=.o)
 OUT 	= build
 
@@ -19,7 +19,7 @@ debug: $(SRC)
 		$(CC) $(SRC) $(CFDEBUG) -o $(OUT)/a.out
 
 debugRun: $(SRC)
-		$(CC) $(SRC) $(CFDEBUG) -o $(OUT)/a.out && goToRoot && gdb build/a.out
+		$(CC) $(SRC) $(CFDEBUG) -o $(OUT)/a.out && goToRoot && gdb build/a.out tests/test.txt
 
 run: $(SRC)
-		$(CC) $(SRC) $(CFLAGS) -o $(OUT)/a.out && goToRoot && build/a.out
+		$(CC) $(SRC) $(CFLAGS) -o $(OUT)/a.out  && build/a.out tests/test.txt

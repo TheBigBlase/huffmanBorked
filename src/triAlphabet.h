@@ -2,7 +2,7 @@
 #define SORT_ALPHABET
 #include <stdbool.h>
 
-
+//extern short alphabetSize;
 /////// HUFFMAN'S TREE ////////
 typedef struct BinaryTree{
 	char chara;
@@ -19,12 +19,10 @@ typedef struct ChainedList{//TODO replace data by tree
 
 
 typedef struct ResList{//TODO replace data by tree
-	bool l;
+	bool isLeft;
 	struct ResList* next;
 } ResList;
 void printRes(ResList*);
-
-extern short alphabetSize;
 
 ////// OPS ON CHAINED LIST //////
 void addToChainedList_char(ChainedList *, char);
@@ -35,7 +33,7 @@ ChainedList loadFile(char* file);
 void bubbleSort(ChainedList *);
 void writeFreqToFile(ChainedList*, char*);
 
-BinaryTree* getHead(ChainedList*);
+BinaryTree* getHead(ChainedList**);
 
 ///// OPS ON RES LIST /////
 void addToResList(ResList *,  bool);

@@ -3,7 +3,15 @@
 #include "triAlphabet.h"
 
 int main(int argc, char ** argv){
-	ChainedList BigTree = loadFile(argv[1]);
+	ChainedList BigTree;
+	char  file[] = "tests/test.txt";
+	if(argv[1]){
+		BigTree = loadFile(argv[1]);
+	}
+	else {
+		BigTree = loadFile(file);
+	}
+
 	//ChainedList BigTreeLeaf = {1,a,NULL};
 	//ChainedList BigTreeRoot = {3,b,&BigTreeLeaf};
 	//ChainedList BigTree = {0,0, &BigTreeRoot};
