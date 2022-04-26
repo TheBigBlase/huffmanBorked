@@ -7,12 +7,11 @@
 
 extern short alphabetSize;
 // "private" funcs 
-void huffmanAux(BinaryTree* tree, ResList* list);
+void huffmanAux(BinaryTree*, ResList*, char*);
 void getHuffmanRes(BinaryTree*);
 void printRes(ResList*);
-void addToRes(ResList * res, char chara);
+void addToRes(ResList *, char);
 
-short resSize = 1;
 
 void huffman(ChainedList* list){
 	while(list->next != NULL){//make tree from node list
@@ -22,78 +21,51 @@ void huffman(ChainedList* list){
 		BinaryTree * tree = createTreeNode(head1, head2); //make tree
 		
 		addToChainedList_tree(list, tree);//add tree to chain and sort
-
-
 	}
+
 	ResList * resList = NULL;
 
-	printBinaryTree(list->node);
-
-	while(!(list->node->nextL == NULL && list->node->nextR == NULL) && alphabetSize != resSize){ //get res from tree
-		huffmanAux(list->node, resList);
-		printRes(resList);
-	}
-
-	printf("----------------- RES --------------\n");
-	//printBinaryTree(list->node);
-	printRes(resList);
-	//printf("\n------------------------\n");
-}
-
-void huffmanAux(BinaryTree* tree, ResList* list){//TODO free tree
-	if(tree == NULL) 
-		exit(1);//error so exit
-	
-
-	else if(tree->nextL != NULL){
-		list = malloc(sizeof(ResList));//NOTE wait wtf
-		list->isLeft = 0;
-		list->next = NULL;
-
-		printf("0");
-
-		if(tree->nextL->nextL == NULL && tree->nextL->nextR == NULL){//if leaf
-			printf(" : %c\n", tree->nextL->chara);
-			free(tree->nextL);
-			tree->nextL = NULL;
-			resSize++;
-		}
-
-		else 
-			huffmanAux(tree->nextL, list->next);//should return from aux, not that bs
-	}
-
-	else if(tree->nextR != NULL){
-		list = malloc(sizeof(ResList));
-		list->next = NULL;
-		list->isLeft = 1;
-
-		printf("1");
-
-		if(tree->nextR->nextL == NULL && tree->nextR->nextR == NULL){//if leaf
-			printf(" : %c\n", tree->nextR->chara);
-			free(tree->nextR);
-			tree->nextR = NULL;
-			resSize++;
-			//huffmanAux(tmp, list->next);
-		}
-
-		else 
-			huffmanAux(tree->nextR, list->next);
-	}
-
-	else{//if left and right are null, but tree is not
-		//printf("Chara : %c\n", tree->chara); ?
-		free(tree);
+	while(!(list->node->nextL == NULL && list->node->nextR == NULL)){ //get res from tree
+		char * path = malloc(sizeof(char));
+		path[0] = '\0';
+		huffmanAux(list->node, resList, path);
 	}
 }
 
 void printRes(ResList * res){
-	printf("%s", res->isLeft?"0":"1");
+	printf("%s", res->isLeft ? "0" : "1");
 	if(res->next != NULL)
 		printRes(res->next);
 }
 
-void addToRes(ResList * list, char c){//not doing the right thing oopsie
-	//read branch from root to leaf, and add chara at end
+void huffmanAux(BinaryTree * tree, ResList * res, char * path){
+	if(!tree)	return;
+
+	if(tree->nextL != NULL){
+		char * pathNext = malloc(sizeof(char) * (strlen(path) + 2));//counting nullbyte
+		strcpy(pathNext, path);
+
+		pathNext[strlen(path)] = '0';//counting to \0 so taking path
+		pathNext[strlen(path)+1] = '\0';//ends with nullbyte
+
+		huffmanAux(tree->nextL, res, pathNext);
+		free(pathNext);
+		tree->nextL = NULL;
+	}
+	if(tree->nextL == NULL && tree->nextR == NULL){
+		printf("%s : %c\n", path, tree->chara);
+	}
+
+	if(tree->nextR != NULL){
+		char * pathNext = malloc(sizeof(char) * (strlen(path) + 2));//counting nullbyte
+		strcpy(pathNext, path);
+
+		pathNext[strlen(path)] = '1';
+		pathNext[strlen(path)+1] = '\0';//ends with nullbyte
+
+		huffmanAux(tree->nextR, res, pathNext);
+		free(pathNext);
+		tree->nextR = NULL;
+	}
+		free(tree);
 }

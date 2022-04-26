@@ -18,7 +18,7 @@ void printBinaryTreeAux(BinaryTree* tree, short depth){
 	printBinaryTreeAux(tree->nextL, depth + 1);
 
 	if(tree->nextL == NULL && tree->nextR == NULL){//if letter
-		for(short i = 0 ; i < depth ; i++)// one letter 
+		for(short i = 0 ; i < depth ; i++)// one letter
 			printf(i == depth - 1 ? "|-" : "  ");
 		printf("%c\n", tree->chara);
 	}
