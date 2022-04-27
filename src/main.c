@@ -7,9 +7,11 @@ int main(int argc, char ** argv){
 	char  file[] = "tests/test.txt";
 	if(argv[1]){
 		BigTree = loadFile(argv[1]);
+		huffman(&BigTree, argv[1]);
 	}
 	else {
 		BigTree = loadFile(file);
+		huffman(&BigTree, file);
 	}
 
 	//ChainedList BigTreeLeaf = {1,a,NULL};
@@ -20,7 +22,6 @@ int main(int argc, char ** argv){
 	//printf("MAIN : printing chainlist\n");
 	//printChainedList(&BigTree);
 	//printf("%d\n", alphabetSize);
-	huffman(&BigTree);
 	//ResList list = {'2',NULL};
 	//ResList list2 = {'1',&list};
 	//printRes(&list2);

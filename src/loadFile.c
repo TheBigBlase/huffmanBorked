@@ -16,16 +16,13 @@ ChainedList loadFile(char* file){
 	int c;
 	while(1) {
 		c = fgetc(tmp);
-		if(c != '\n'){
-			if(feof(tmp)){break;} //ugly but has to check after 
-			addToChainedList_char(&res, c);//Do we count EOL / EOF ?
-		}
+		if(feof(tmp)){break;} //ugly but has to check after 
+		addToChainedList_char(&res, c);//Do we count EOL / EOF ?
 	}
 
 	fclose(tmp);
 	bubbleSort(&res);
 	writeFreqToFile(&res, file);
-	printChainedList(&res);
 	return res;
 }
 

@@ -19,10 +19,11 @@ typedef struct ChainedList{//TODO replace data by tree
 
 
 typedef struct ResList{//TODO replace data by tree
-	bool isLeft;
+	char * path;
+	char chara;
 	struct ResList* next;
 } ResList;
-void printRes(ResList*);
+
 
 ////// OPS ON CHAINED LIST //////
 void addToChainedList_char(ChainedList *, char);
@@ -30,19 +31,22 @@ void addToChainedList_tree(ChainedList *,  BinaryTree *);
 BinaryTree * removeFromList(ChainedList * list);
 
 ChainedList loadFile(char* file);
+
 void bubbleSort(ChainedList *);
 void writeFreqToFile(ChainedList*, char*);
 
 BinaryTree* getHead(ChainedList**);
 
 ///// OPS ON RES LIST /////
-void addToResList(ResList *,  bool);
+void addToResList(ResList *,  char*, char);
+void printResList(ResList *);
+char* getPathFromChara(ResList *, char);
 
 ///// PRINT /////
 void printBinaryTree(BinaryTree*);
 void printChainedList(ChainedList*);
 
 ///// OPS ON BINARY TREE /////
-void huffman(ChainedList*);
+void huffman(ChainedList*, char*);
 BinaryTree * createTreeNode(BinaryTree*, BinaryTree*);
 #endif

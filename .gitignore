@@ -6,5 +6,6 @@ a.out
 # MacOS Cache
 .DS_Store
 test/
+tests/
 
 
