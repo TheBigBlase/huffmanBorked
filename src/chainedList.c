@@ -5,6 +5,7 @@
 
 
 extern short alphabetSize;
+
 void addToChainedList_char(ChainedList* list, char c){//TODO non recursive for opti
 	if(list == NULL || list->node == NULL){
 		list->node = malloc(sizeof(BinaryTree));
@@ -87,7 +88,6 @@ void printChainedList(ChainedList* l){
 
 //TODO mege sort (greenend.org.uk)
 void swap(ChainedList * x, ChainedList *y){
-	//printf("old next %p, old root %p\n", x, y);
 	ChainedList * tmp = malloc(sizeof(ChainedList));
 	tmp->node = malloc(sizeof(BinaryTree));
 	tmp->node->count = x->node->count;//TODO do that better
@@ -98,7 +98,6 @@ void swap(ChainedList * x, ChainedList *y){
 	y->node->chara=tmp->node->chara;
 	free(tmp->node);
 	free(tmp);
-	//printf("new next %p, new root %p\n", x, y);
 }
 
 void bubbleSort(ChainedList *list){

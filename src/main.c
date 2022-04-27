@@ -12,18 +12,7 @@ int main(int argc, char ** argv){
 		BigTree = loadFile(file);
 	}
 
-	//ChainedList BigTreeLeaf = {1,a,NULL};
-	//ChainedList BigTreeRoot = {3,b,&BigTreeLeaf};
-	//ChainedList BigTree = {0,0, &BigTreeRoot};
+	huffman(&BigTree, file);
 
-	//bubbleSort(&BigTree);
-	//printf("MAIN : printing chainlist\n");
-	//printChainedList(&BigTree);
-	//printf("%d\n", alphabetSize);
-	huffman(&BigTree);
-	//ResList list = {'2',NULL};
-	//ResList list2 = {'1',&list};
-	//printRes(&list2);
-	
 	return 0;
 }

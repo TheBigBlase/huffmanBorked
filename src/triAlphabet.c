@@ -5,15 +5,21 @@
 #include <string.h>
 #include <malloc.h>
 
-extern short alphabetSize;
 // "private" funcs 
 void huffmanAux(BinaryTree*, ResList*, char*);
 void getHuffmanRes(BinaryTree*);
-void printRes(ResList*);
-void addToRes(ResList *, char);
+
+void huffman(ChainedList* list, char* file){
+
+	char* fileNoExt = malloc(sizeof(strlen(file)+1));
+	strcpy(fileNoExt, file);
+	strtok(fileNoExt, ".");
+
+	char* fileNewExtension = malloc(strlen(fileNoExt) + 10);//9 new chars in name
+	strcpy(fileNewExtension, fileNoExt); /* copy name into the new var */
+	strcat(fileNewExtension, "_codex.txt"); /* add the extension */
 
 
-void huffman(ChainedList* list){
 	while(list->next != NULL){//make tree from node list
 
 		BinaryTree * head1 = getHead(&list);//get 2 first elt
@@ -23,20 +29,42 @@ void huffman(ChainedList* list){
 		addToChainedList_tree(list, tree);//add tree to chain and sort
 	}
 
-	ResList * resList = NULL;
+	ResList * resList = malloc(sizeof(ResList));
+	resList->path = "";
+	resList->next = NULL;
+	resList->chara = 0;
+
+	//freopen(fileNewExtension, "w+", stdout);//print to file
 
 	while(!(list->node->nextL == NULL && list->node->nextR == NULL)){ //get res from tree
 		char * path = malloc(sizeof(char));
 		path[0] = '\0';
 		huffmanAux(list->node, resList, path);
 	}
+
+	char* fileBin = malloc(strlen(fileNoExt) + 4);//9 new chars in name
+	strcpy(fileBin, fileNoExt); /* copy name into the new var */
+	strcat(fileBin, ".bin"); /* add the extension */
+
+	//freopen(fileBin, "w+", stdout);//print to file bin
+
+	printResList(resList);
+	FILE *tmp = fopen(file, "r");
+	int c;
+	while(1) {
+		c = fgetc(tmp);
+		if(c != '\n'){
+			if(feof(tmp)){break;} //ugly but has to check after 
+			printf("%s",getPathFromChara(resList, c));
+		}
+	}
+	fclose(tmp);
+	printf("\n");
+
+	freopen("/dev/tty", "w", stdout); //resume to stdout
+	
 }
 
-void printRes(ResList * res){
-	printf("%s", res->isLeft ? "0" : "1");
-	if(res->next != NULL)
-		printRes(res->next);
-}
 
 void huffmanAux(BinaryTree * tree, ResList * res, char * path){
 	if(!tree)	return;
@@ -46,14 +74,16 @@ void huffmanAux(BinaryTree * tree, ResList * res, char * path){
 		strcpy(pathNext, path);
 
 		pathNext[strlen(path)] = '0';//counting to \0 so taking path
-		pathNext[strlen(path)+1] = '\0';//ends with nullbyte
+		pathNext[strlen(path) + 1] = '\0';//ends with nullbyte
 
 		huffmanAux(tree->nextL, res, pathNext);
 		free(pathNext);
 		tree->nextL = NULL;
 	}
 	if(tree->nextL == NULL && tree->nextR == NULL){
+
 		printf("%s : %c\n", path, tree->chara);
+		addToResList(res, path, tree->chara);
 	}
 
 	if(tree->nextR != NULL){
@@ -67,5 +97,8 @@ void huffmanAux(BinaryTree * tree, ResList * res, char * path){
 		free(pathNext);
 		tree->nextR = NULL;
 	}
-		free(tree);
+	free(tree);
+	tree->nextL = NULL;
+	tree->nextR = NULL;
+	//jsut to make extra sure
 }
