@@ -1,4 +1,4 @@
-#include "triAlphabet.h"
+#include "huffman.h"
 #include <stdio.h>
 #include <malloc.h>
 #include <stdlib.h>

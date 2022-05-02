@@ -12,18 +12,28 @@ typedef struct BinaryTree{
 
 /////// CHAINED LIST ////////
 
-typedef struct ChainedList{//TODO replace data by tree
+typedef struct ChainedList{//TODO replace data by tree maybe ?
 	BinaryTree* node;
 	struct ChainedList* next;
 } ChainedList;
 
 
-typedef struct ResList{//TODO replace data by tree
+typedef struct ResList{
 	char * path;
 	char chara;
 	struct ResList* next;
 } ResList;
 
+typedef struct Buffer{
+	char c;
+	struct Buffer *next;
+}Buffer;
+
+
+void printBuf(Buffer * b);
+Buffer * writeToBuff(Buffer *, char *);
+Buffer* buffToFile(Buffer *);
+void emptyBuffer(Buffer *);
 
 ////// OPS ON CHAINED LIST //////
 void addToChainedList_char(ChainedList *, char);

@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "triAlphabet.h"
+#include "huffman.h"
 #include <stdio.h>
 
 short alphabetSize = 0;

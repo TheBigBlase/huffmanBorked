@@ -1,4 +1,4 @@
-#include "triAlphabet.h"
+#include "huffman.h"
 #include <stdio.h>
 #include <stdio_ext.h>
 #include <stdlib.h>
@@ -36,32 +36,44 @@ void huffman(ChainedList* list, char * file){
 	strcpy(fileCodex, fileNoExt);
 	strcat(fileCodex, "_codex.txt");
 
-	//freopen(fileCodex, "w+", stdout); //resume to stdout
+	freopen(fileCodex, "w+", stdout); //write to file
 
 	while(!(list->node->nextL == NULL && list->node->nextR == NULL)){ //get res from tree
 		char * path = malloc(sizeof(char));
 		path[0] = '\0';
 		huffmanAux(list->node, resList, path);
 	}
+	//freopen("/dev/tty", "w", stdout); //resume to stdout
 
 	printResList(resList);
 	char* fileBin = malloc(strlen(fileNoExt) + 4);//9 new chars in name
 	strcpy(fileBin, fileNoExt); 
 	strcat(fileBin, ".bin"); 
 
-	//freopen(fileBin, "w+", stdout);//print to file bin
 
 	FILE *tmp = fopen(file, "r");
 	char c;
+	Buffer * buffer = NULL;
+
+	//freopen(fileBin, "w+", stdout); //write to file
+
 	while(1) {
 		c = fgetc(tmp);
 		if(feof(tmp)){break;} //ugly but has to check after 
-		printf("%s", getPathFromChara(resList, c));
+		//printf("%c\n", c);
+		if(buffer == NULL){//no fancy condition, if - else does the job and looks icer
+			buffer = writeToBuff(buffer, getPathFromChara(resList, c));//keep first
+		}
+		else
+			writeToBuff(buffer, getPathFromChara(resList, c));
+
+		buffer = buffToFile(buffer);
 	}
 	fclose(tmp);
+	emptyBuffer(buffer);
 	printf("\n");
+	//freopen("/dev/tty", "w", stdout); //resume to stdout
 
-	freopen("/dev/tty", "w", stdout); //resume to stdout
 }
 
 void huffmanAux(BinaryTree * tree, ResList * res, char * path){
